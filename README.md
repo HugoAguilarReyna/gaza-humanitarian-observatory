@@ -4,7 +4,7 @@ Observatorio del impacto humano y territorial: impacto humano, evolución del da
 territorial y agrupación de trayectorias observadas, con datos abiertos, fuentes
 trazables y las unidades de cada fuente siempre a la vista.
 
-[![Integridad](https://github.com/Dev-HugoAguilar/gaza-humanitarian-observatory/actions/workflows/tests.yml/badge.svg)](https://github.com/Dev-HugoAguilar/gaza-humanitarian-observatory/actions/workflows/tests.yml)
+[![Integridad](https://github.com/HugoAguilarReyna/gaza-humanitarian-observatory/actions/workflows/tests.yml/badge.svg)](https://github.com/HugoAguilarReyna/gaza-humanitarian-observatory/actions/workflows/tests.yml)
 [![Python](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)](source)
 [![Privacidad](https://img.shields.io/badge/lista%20nominal-no%20redistribuida-b7791f)](#qué-no-se-publica)
 
@@ -17,7 +17,7 @@ trazables y las unidades de cada fuente siempre a la vista.
 ## Demo
 
 ```bash
-git clone https://github.com/Dev-HugoAguilar/gaza-humanitarian-observatory.git
+git clone https://github.com/HugoAguilarReyna/gaza-humanitarian-observatory.git
 cd gaza-humanitarian-observatory
 python -m http.server 8000 --directory app
 ```
