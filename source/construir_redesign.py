@@ -1,7 +1,19 @@
-import pathlib,json,subprocess,shutil,sys
-R=pathlib.Path(__file__).resolve().parent
-subprocess.run([sys.executable,'-X','utf8',str(R/'construir_observatorio.py')],check=True)
-s=(R/'dist/index.html').read_text(encoding='utf-8')
+"""Añade al documento del observatorio las vistas del rediseño (v0.3).
+
+Se ejecuta después de `construir_observatorio.py` y trabaja sobre el documento
+intermedio `source/dist/index.html`, que es también su salida. Todas las rutas se
+resuelven desde este archivo: no hay rutas del monorepo donde se armó el tablero.
+"""
+from __future__ import annotations
+
+import json
+import pathlib
+import subprocess
+import sys
+
+R = pathlib.Path(__file__).resolve().parent
+subprocess.run([sys.executable, '-X', 'utf8', str(R/'construir_observatorio.py')], check=True)
+s = (R/'dist/index.html').read_text(encoding='utf-8')
 s=s.replace('</nav>','<button role="tab" aria-selected="false" data-tab="archivo">Archivo completo</button><button role="tab" aria-selected="false" data-tab="respuesta">Acceso y respuesta</button><button role="tab" aria-selected="false" data-tab="referencias">Diseño y referencias</button></nav>')
 s=s.replace('<section id="evidencia"', (R/'redesign/nuevas_vistas.html').read_text(encoding='utf-8')+'<section id="evidencia"',1)
 s=s.replace('<section id="referencias"', (R/'redesign/respuesta.html').read_text(encoding='utf-8')+'<section id="referencias"',1)
@@ -16,4 +28,4 @@ s=s.replace('</style>', '</style>'+css,1)
 js=(R/'redesign/redesign.js').read_text(encoding='utf-8').replace('__EXPANDED__',json.dumps(json.load(open(R/'redesign/datos.json', encoding='utf-8')),ensure_ascii=False,separators=(',',':')).replace('</','<\\/'))
 s+='\n<script>'+(R/'redesign/d3.min.js').read_text(encoding='utf-8')+'</script>\n<script>'+js+'</script>'
 s+='\n<style>'+(R/'redesign/respuesta.css').read_text(encoding='utf-8')+'</style>\n<script>'+(R/'redesign/respuesta.js').read_text(encoding='utf-8')+'</script>'
-(R/'dist/index.html').write_text(s, encoding='utf-8', newline='');shutil.copyfile(R/'dist/index.html',R.parent/'Gaza_Huellas_del_dano_v1.html');print('v0.3',len(s))
+(R/'dist/index.html').write_text(s, encoding='utf-8', newline='');print('v0.3',len(s))

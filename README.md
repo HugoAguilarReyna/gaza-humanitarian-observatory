@@ -27,6 +27,23 @@ visualizaciones embebidos; no hay compilación ni backend.
 
 ![Portada del observatorio](docs/cover.jpg)
 
+## Construir
+
+La construcción tiene **dos recorridos separados**; el detalle de ambos, los
+archivos que lee cada paso y lo que falta para el nominal están en
+[`source/README.md`](source/README.md).
+
+```bash
+python tools/construir.py               # construcción pública → app/index.html
+python tools/construir.py --comprobar   # verifica que el build reproduce lo publicado
+python -m pytest -q                     # contrato de datos y guardas
+```
+
+La construcción pública usa solo los agregados versionados en `source/` y **no lee
+`source/memoria/personas.json`**. La vista «Cada punto, una vida» es una extensión
+nominal opcional (`python tools/construir_nominal.py`) que exige ese archivo y
+escribe en `build/`, que git ignora.
+
 ## Qué demuestra
 
 - **Separación de fuentes y unidades**: reportes diarios, estimaciones de
@@ -45,7 +62,8 @@ visualizaciones embebidos; no hay compilación ni backend.
 La **lista nominal de 72 835 personas identificadas** (nombre y edad declarada,
 corte al 7 de mayo de 2026) **no se redistribuye en este repositorio**: son datos
 personales de personas fallecidas. La sección «Cada punto, una vida» requiere
-obtenerla de la fuente original y reconstruirla con `source/construir_memoria.py`.
+obtenerla de la fuente original y reconstruirla con `tools/construir_nominal.py`
+(ver [`source/README.md`](source/README.md)).
 
 Una prueba de la suite **falla si alguien versiona esa lista** o cualquier archivo
 con registros por persona. La regla es ejecutable, no una promesa.
@@ -57,13 +75,16 @@ app/index.html              Tablero publicable con agregados embebidos
 source/                     Construcción del tablero (Python + JS)
   construir_observatorio.py Reportes diarios y series
   construir_territorio_etiquetas.py  Rejilla territorial y etiquetas
-  construir_pronostico.py   Pronóstico agregado de conteos
+  construir_pronostico.py   Pronóstico agregado de conteos (resultados ya calculados)
   construir_redesign.py     Rejilla de daño por celdas
-  construir_memoria.py      Lista nominal (requiere datos locales, no versionados)
+  construir_memoria.py      Extensión nominal opcional (requiere datos locales, no versionados)
+  panel/validacion.json     Agregado de cobertura del panel UNOSAT (14 evaluaciones)
   template.html, visual.json
+tools/construir.py          Construcción pública: source/ → app/index.html
+tools/construir_nominal.py  Extensión nominal opcional: source/ + personas.json → build/
 docs/DATOS.md               Fuentes, unidades, cortes y exclusiones
 tools/                      Verificadores de navegador del proyecto
-tests/test_datos.py         Contrato de datos y guarda de no redistribución
+tests/                      Contrato de datos, guardas y contrato de construcción
 ```
 
 ## Datos y atribución

@@ -1,0 +1,184 @@
+{
+  "source_gdb_sha256": "764282b1a130bdac2ec7f77c43e7ab65bc9121ddb6aa8a839a0a2f25946cbdf8",
+  "layer": "Damage_Sites_GazaStrip_20251011",
+  "crs": "COMPD_CS[\"WGS 84 + EGM96 height\",GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4326\"]],VERT_CS[\"EGM96 height\",VERT_DATUM[\"EGM96 geoid\",2005,AUTHORITY[\"EPSG\",\"5171\"]],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Gravity-related height\",UP],AUTHORITY[\"EPSG\",\"5773\"]]]",
+  "sites": 198308,
+  "panel_rows": 2776312,
+  "evaluations": [
+    {
+      "evaluation": 1,
+      "states": {
+        "missing_date_and_class": 182707,
+        "date_and_class": 15601
+      },
+      "dates": {
+        "missing": 182707,
+        "2023-10-15": 15601
+      }
+    },
+    {
+      "evaluation": 2,
+      "states": {
+        "date_and_class": 43398,
+        "missing_date_and_class": 154910
+      },
+      "dates": {
+        "2023-11-07": 43398,
+        "missing": 154910
+      }
+    },
+    {
+      "evaluation": 3,
+      "states": {
+        "date_and_class": 58997,
+        "missing_date_and_class": 139311
+      },
+      "dates": {
+        "2023-11-26": 58997,
+        "missing": 139311
+      }
+    },
+    {
+      "evaluation": 4,
+      "states": {
+        "date_and_class": 104572,
+        "missing_date_and_class": 93736
+      },
+      "dates": {
+        "2024-01-06": 70809,
+        "missing": 93736,
+        "2024-01-07": 33763
+      }
+    },
+    {
+      "evaluation": 5,
+      "states": {
+        "date_and_class": 126052,
+        "missing_date_and_class": 72256
+      },
+      "dates": {
+        "2024-02-29": 126052,
+        "missing": 72256
+      }
+    },
+    {
+      "evaluation": 6,
+      "states": {
+        "date_and_class": 130550,
+        "missing_date_and_class": 67572,
+        "date_without_class": 186
+      },
+      "dates": {
+        "2024-04-01": 95840,
+        "missing": 67572,
+        "2024-03-31": 34896
+      }
+    },
+    {
+      "evaluation": 7,
+      "states": {
+        "date_and_class": 135619,
+        "missing_date_and_class": 62689
+      },
+      "dates": {
+        "2024-05-03": 135619,
+        "missing": 62689
+      }
+    },
+    {
+      "evaluation": 8,
+      "states": {
+        "date_and_class": 155129,
+        "missing_date_and_class": 43179
+      },
+      "dates": {
+        "2024-07-06": 155129,
+        "missing": 43179
+      }
+    },
+    {
+      "evaluation": 9,
+      "states": {
+        "date_and_class": 161566,
+        "missing_date_and_class": 36742
+      },
+      "dates": {
+        "2024-09-06": 130787,
+        "missing": 36742,
+        "2024-09-03": 30779
+      }
+    },
+    {
+      "evaluation": 10,
+      "states": {
+        "date_and_class": 167766,
+        "date_without_class": 1,
+        "missing_date_and_class": 30541
+      },
+      "dates": {
+        "2024-12-01": 167767,
+        "missing": 30541
+      }
+    },
+    {
+      "evaluation": 11,
+      "states": {
+        "date_and_class": 169973,
+        "missing_date_and_class": 28335
+      },
+      "dates": {
+        "2025-02-25": 169973,
+        "missing": 28335
+      }
+    },
+    {
+      "evaluation": 12,
+      "states": {
+        "date_and_class": 171322,
+        "missing_date_and_class": 26986
+      },
+      "dates": {
+        "2025-04-04": 171322,
+        "missing": 26986
+      }
+    },
+    {
+      "evaluation": 13,
+      "states": {
+        "date_and_class": 190577,
+        "missing_date_and_class": 7731
+      },
+      "dates": {
+        "2025-07-08": 190559,
+        "missing": 7731,
+        "2024-07-08": 18
+      }
+    },
+    {
+      "evaluation": 14,
+      "states": {
+        "date_and_class": 198308
+      },
+      "dates": {
+        "2025-10-11": 198242,
+        "2025-09-22": 66
+      }
+    }
+  ],
+  "dates_before_previous_observed": 17,
+  "unknown_domain_codes": [],
+  "final_class_counts": {
+    "1": 123464,
+    "3": 33857,
+    "2": 17116,
+    "6": 35,
+    "4": 21669,
+    "11": 2167
+  },
+  "checks": {
+    "unique_fids": true,
+    "aggregates_reconcile": true,
+    "transitions_reconcile": true
+  },
+  "identity": "source_gdb_sha256 + layer + fid; no cross-file stability assumed"
+}

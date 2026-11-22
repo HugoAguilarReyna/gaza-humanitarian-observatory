@@ -1,5 +1,10 @@
 """Incorpora la vista «Cada punto, una vida» al HTML del observatorio.
 
+**Recorrido nominal opcional.** No se ejecuta en la construcción pública: necesita
+`source/memoria/personas.json` (72 835 registros con nombre y edad declarada), que
+el repositorio **no redistribuye** y que hay que obtener de la fuente original.
+Ver `source/README.md`.
+
 Se ejecuta después de los constructores v0.2 y v0.3 y aplica cuatro inserciones
 sobre el documento ya armado:
 
@@ -9,17 +14,30 @@ sobre el documento ya armado:
   3. la sección `#memoria` antes de `#personas`;
   4. el script de la vista con los 72 835 registros nominales incrustados.
 
-La sección y el guion viven en `fuente/memoria/`. No se toca ninguna otra vista.
+La sección y el guion viven en `source/memoria/`. No se toca ninguna otra vista.
+Todas las rutas se resuelven desde este archivo; no hay rutas del monorepo.
+
+Uso:
+    python source/construir_memoria.py
+    python source/construir_memoria.py --documento RUTA --personas RUTA
 """
 from __future__ import annotations
 
+import argparse
 import json
+import os
 from pathlib import Path
 
-RAIZ = Path(__file__).resolve().parents[3]
-FUENTE = RAIZ / "dashboards" / "gaza-observatorio" / "fuente"
+RAIZ = Path(__file__).resolve().parents[1]
+FUENTE = RAIZ / "source"
 MEMORIA = FUENTE / "memoria"
-DOCUMENTO = FUENTE / "dist" / "index.html"
+DOCUMENTO_POR_DEFECTO = Path(
+    os.environ.get("GAZA_DOCUMENTO", FUENTE / "dist" / "index.html")
+)
+PERSONAS_POR_DEFECTO = Path(
+    os.environ.get("GAZA_PERSONAS", MEMORIA / "personas.json")
+)
+REGISTROS_ESPERADOS = 72835
 
 # Las consultas de medios viven ya en `memoria.css`; aquí solo lo que añade el
 # constructor (aviso de alcance bajo la leyenda).
@@ -30,13 +48,41 @@ CSS_ADICIONAL = """
 BOTON = '<button role="tab" aria-selected="false" data-tab="memoria">Cada punto, una vida</button>'
 
 
-def principal() -> int:
-    if not DOCUMENTO.exists():
-        raise SystemExit(f"falta el documento base: {DOCUMENTO}")
-    html = DOCUMENTO.read_text(encoding="utf-8")
+def principal(argumentos: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Extensión nominal opcional: incrusta la lista de personas identificadas."
+    )
+    parser.add_argument(
+        "--documento",
+        type=Path,
+        default=DOCUMENTO_POR_DEFECTO,
+        help="documento construido por la vía pública (source/dist/index.html)",
+    )
+    parser.add_argument(
+        "--personas",
+        type=Path,
+        default=PERSONAS_POR_DEFECTO,
+        help="lista nominal local, no versionada (source/memoria/personas.json)",
+    )
+    args = parser.parse_args(argumentos)
 
-    personas = json.loads((MEMORIA / "personas.json").read_text(encoding="utf-8"))
-    if len(personas) != 72835:
+    if not args.documento.exists():
+        raise SystemExit(
+            f"falta el documento base: {args.documento}\n"
+            "  ejecuta antes `python tools/construir.py` (construcción pública)."
+        )
+    if not args.personas.exists():
+        raise SystemExit(
+            f"falta la lista nominal: {args.personas}\n"
+            "  es la extensión opcional: descárgala de la fuente original y guárdala"
+            " ahí (o usa --personas RUTA / GAZA_PERSONAS). Este repositorio no la"
+            " redistribuye; ver source/README.md."
+        )
+
+    html = args.documento.read_text(encoding="utf-8")
+
+    personas = json.loads(args.personas.read_text(encoding="utf-8"))
+    if len(personas) != REGISTROS_ESPERADOS:
         raise SystemExit(f"se esperaban 72 835 registros nominales, hay {len(personas):,}")
 
     seccion = (MEMORIA / "seccion.html").read_text(encoding="utf-8").strip()
@@ -65,7 +111,7 @@ def principal() -> int:
     datos = json.dumps(personas, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     html += "\n<script>" + guion.replace("__PERSONAS__", datos) + "</script>"
 
-    DOCUMENTO.write_text(html, encoding="utf-8", newline="")
+    args.documento.write_text(html, encoding="utf-8", newline="")
     print(
         f"Cada punto, una vida: {len(personas):,} registros · documento {len(html.encode('utf-8')):,} bytes"
     )
